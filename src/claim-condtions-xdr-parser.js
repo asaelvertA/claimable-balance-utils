@@ -53,12 +53,15 @@ function formatTimespan(seconds, precision = 0) {
     let scaled = seconds.toNumber(),
         currentUnit
 
-    for (let [span, unit] of [[60, 'sec'], [60, 'hr'], [24, 'day'], [364, 'year']]) {
+    for (let [span, unit] of [[60, 'second'], [60, 'minute'], [24, 'hour'], [364, 'day'], [10000, 'year']]) {
         currentUnit = unit
-        if (scaled < span) break
+        if (scaled < span) {
+            scaled = scaled.toFixed(precision).replace(/.?0+$/, '')
+            return `${scaled} ${currentUnit + (scaled > 1 ? 's' : '')}`
+        }
         scaled /= span
     }
-    return `${scaled.toFixed(precision)} ${currentUnit + (scaled >= 2 ? 's' : '')}`
+    return '∞'
 }
 
 function formatAbsoluteTime(seconds) {
