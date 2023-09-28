@@ -34,22 +34,25 @@ class ClaimableInterval {
 
     iterate(timespanCallback) {
         for (let i = 0; i < this.interval.length; i += 2) {
-            if (timespanCallback([this.interval[i], this.interval[i + 1]])) return true
+            if (timespanCallback([this.interval[i], this.interval[i + 1]]))
+                return true
         }
         return false
     }
 
     getStatus() {
         const now = parseTime(new Date())
-        if (this.iterate(interval => interval[0] <= now && interval[1] >= now)) return 'available'
-        if (this.iterate(interval => interval[0] > now)) return 'pending'
-        if (this.iterate(interval => interval[0] < now)) return 'expired'
+        if (this.iterate(interval => interval[0] <= now && interval[1] >= now))
+            return 'available'
+        if (this.iterate(interval => interval[0] > now))
+            return 'pending'
+        if (this.iterate(interval => interval[0] < now))
+            return 'expired'
         return 'unfeasible'
     }
 }
 
 class ClaimableIntervalIntersection {
-
     static and(intervals) {
         if (intervals.length < 2) return intervals[0] || []
 
@@ -61,9 +64,9 @@ class ClaimableIntervalIntersection {
             }
         merged.sort((a, b) => a.hasOwnProperty('start') && b.hasOwnProperty('end') ? -1 : a.start - b.start || a.end - b.end)
 
-        let depth = 0,
-            intervalStart,
-            result = []
+        let depth = 0
+        let intervalStart
+        let result = []
         for (let x of merged) {
             if (x.hasOwnProperty('start')) {
                 depth++
@@ -84,14 +87,16 @@ class ClaimableIntervalIntersection {
     }
 
     static or(intervals) {
-        if (intervals.length < 2) return intervals
+        if (intervals.length < 2)
+            return intervals
 
         intervals.sort((a, b) => a[0] - b[0])
 
-        let result = [],
-            previous
+        let result = []
+        let previous
         for (let {interval} of intervals) {
-            if (!interval.length) continue
+            if (!interval.length)
+                continue
             if (!previous) {
                 previous = interval
                 continue

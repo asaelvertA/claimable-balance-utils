@@ -1,8 +1,10 @@
 import {StrKey} from 'stellar-sdk'
 
 function xdrParseAccountAddress(accountId) {
-    if (!accountId) return undefined
-    if (StrKey.isValidEd25519PublicKey(accountId)) return accountId
+    if (!accountId)
+        return undefined
+    if (StrKey.isValidEd25519PublicKey(accountId))
+        return accountId
     if (accountId.arm) {
         switch (accountId.arm()) {
             case 'ed25519':
@@ -20,14 +22,15 @@ function xdrParseAccountAddress(accountId) {
 }
 
 function wrapCondition(condition, level) {
-    if (level === 0) return condition
+    if (level === 0)
+        return condition
     return '(' + condition + ')'
 }
 
 function xdrParseClaimantPredicate(predicate, level, negate = false) {
     if (!predicate) return {}
-    const type = predicate.switch().name,
-        value = predicate.value()
+    const type = predicate.switch().name
+    const value = predicate.value()
     switch (type) {
         case 'claimPredicateUnconditional':
             return 'unconditional'
@@ -50,8 +53,8 @@ function xdrParseClaimantPredicate(predicate, level, negate = false) {
 }
 
 function formatTimespan(seconds, precision = 0) {
-    let scaled = seconds.toNumber(),
-        currentUnit
+    let scaled = secondsToNumber(seconds)
+    let currentUnit
 
     for (let [span, unit] of [[60, 'second'], [60, 'minute'], [24, 'hour'], [364, 'day'], [10000, 'year']]) {
         currentUnit = unit
@@ -65,9 +68,17 @@ function formatTimespan(seconds, precision = 0) {
 }
 
 function formatAbsoluteTime(seconds) {
-    return new Date(seconds.toNumber() * 1000).toISOString()
+    return new Date(secondsToNumber(seconds) * 1000).toISOString()
         .replace(/\.\d+Z$/, '')
         .replace('T', ' ')
+}
+
+function secondsToNumber(seconds) {
+    if (!seconds)
+        return seconds
+    if (seconds.toNumber)
+        return seconds.toNumber()
+    return Number(seconds._value)
 }
 
 /**
