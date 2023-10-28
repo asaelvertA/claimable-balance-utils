@@ -1,4 +1,4 @@
-import {StrKey} from 'stellar-sdk'
+import {StrKey} from 'stellar-base'
 
 function xdrParseAccountAddress(accountId) {
     if (!accountId)
