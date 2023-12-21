@@ -1,6 +1,6 @@
 {
   "name": "@stellar-expert/claimable-balance-utils",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Utilities for Stellar claimable balances",
   "type": "module",
   "main": "index.js",

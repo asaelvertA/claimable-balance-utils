@@ -1,2 +1,2 @@
-export * from './src/claimable-balance-overlap'
-export * from './src/claim-condtions-xdr-parser'
+export * from './src/claimable-balance-overlap.js'
+export * from './src/claim-condtions-xdr-parser.js'
