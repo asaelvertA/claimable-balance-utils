@@ -2,7 +2,7 @@
 
 > Utilities for Stellar claimable balances
 
-## Usage
+## Usages
 
 ---
 
